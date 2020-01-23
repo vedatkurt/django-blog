@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block block_body %}
+
+<div class="row">
+  <div class="col-md-6 offset-md-3">
+    <h1>Update Article</h1>
+    <hr>
+    <br>
+
+    <form method = "post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      {{ form|crispy}}
+      {{ form.media}}
+      <br>
+      <hr>
+      <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+
+  </div>
+</div>
+
+{% endblock block_body %}

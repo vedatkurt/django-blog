@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block block_body %}
+
+<div class="row">
+
+      <!-- Post Content Column -->
+      <div class="col-lg-8">
+  
+          <!-- Title -->
+          <h3 class="mt-4">{{article.title}}</h3>
+  
+          <!-- Author -->
+          <p class="lead">
+            by
+            {{article.author.username}}
+          </p>
+          <hr>
+  
+          <!-- Date/Time -->
+          <p>
+            posted on {{article.created_date}}
+          </p>
+          <hr>
+  
+          <!-- Preview Image -->
+          {% if article.article_image %}
+              <img class="img-fluid rounded" src="{{article.article_image.url}}" alt="">
+          {% endif %}
+  
+          <!-- Post Content -->
+          <p class="lead">
+            Content : {{article.content|safe}}
+          </p>
+          <hr>
+
+          <!-- Preview Comments -->
+          {% if comments %}
+            <h4>Yorumlar</h4>
+            <hr>
+
+            {% for comment in comments %}
+              <div class="media mb-4">
+                <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                <div class="media-body">
+                  <h5 class="mt-0"> {{comment.comment_author}}</h5>
+                    {{comment.comment_date}}
+                    <br>
+                    {{comment.comment_content}}
+                </div>
+              </div>
+            {% endfor %}
+
+          {% else %}
+            <div class="alert alert-danger">
+              Bu makaleye herhangi bir yorum yazilmamis, ilk yorum yapan siz olun
+            </div>
+          {% endif %}
+          
+          <!-- Comments Form -->
+          <div class="card my-4">
+            <h5 class="card-header">Leave a Comment:</h5>
+            <div class="card-body">
+              <form method="post" action="{% url 'article:comment' article.id %}">
+                {% csrf_token %}
+
+                <div class="form-group">
+                  <label for="formGroupExampleInput">Isim</label>
+                  <input name="comment_author" type="text" class="form-control" id="formGroupExampleInput" placeholder="Ismini girin">
+                </div>
+                
+                <div class="form-group">
+                  <label for="formGroupExampleInput">Yorum</label>
+                  <textarea name="comment_content" class="form-control" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+            </div>
+          </div>
+</div> 
+</div>
+<!-- /.row -->
+
+{% endblock block_body %}

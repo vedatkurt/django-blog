@@ -1,0 +1,4 @@
+{
+    "workbench.editor.enablePreview": false,
+    "python.formatting.provider": "yapf"
+}

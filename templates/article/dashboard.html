@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block block_body %}
+<h3>Dashboard</h3>
+<hr>
+
+<a class="btn btn-danger" href="/article/add">Add Article</a>
+<hr>
+
+<ul>
+    {% for warnIndex in warningList %}
+        <li> {{ warnIndex }}</li>
+    {% endfor %}
+</ul>
+
+{% if articles %}
+    <table class="table">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Title</th>
+            <th scope="col">Author</th>
+            <th scope="col">Created Date</th>
+            <th scope="col">Update</th>
+            <th scope="col">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for article in articles %}
+            <tr>
+                <th scope="row">{{article.id}} </th>
+                <td><a href="/article/detail/{{article.id}}">{{article.title}}</a></td>
+                <td>{{article.author.username }}</td>
+                <td>{{article.created_date }}</td>
+                <td><a href="/article/update/{{article.id}}" class="btn btn-danger">Update</a></td>
+                <td><a href="/article/delete/{{article.id}}" class="btn btn-danger">Delete</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div class="alert alert-danger">
+        There is no articles found!
+    </div>
+{% endif %}
+
+{% endblock block_body %}
